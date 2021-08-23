@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout.html}">
+<meta charset="UTF-8">
+<div layout:fragment="content">
+	<div class="alert alert-primary" th:if="${#lists.isEmpty(lista)}">
+		Nenhuma Pessoa Cadastrada.</div>
+	<div class="alert alert-primary" th:if="${mensagem != null}"
+		th:text="${mensagem}"></div>
+	<div th:if="${not #lists.isEmpty(lista)}">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Nome Completo</th>
+					<th>CPF</th>
+					<th>Data Nascimento</th>
+					<th>Cep</th>
+					<th>Logradouro</th>
+					<th>Numero</th>
+					<th>Complemento</th>
+					<th>Municipio</th>
+					<th>Estado</th>
+					<th>Opções</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="pessoa:${lista}">
+					<td th:text="${pessoa.id}"></td>
+					<td th:text="${pessoa.nome}"></td>
+					<td th:text="${pessoa.cpf}"></td>
+					<td th:text="${#dates.format(pessoa.dataNascimento, 'dd/MM/yyyy')}"></td>
+					<td th:text="${pessoa.endereco.cep}"></td>
+					<td th:text="${pessoa.endereco.logradouro}"></td>
+					<td th:text="${pessoa.endereco.numero}"></td>
+					<td th:text="${pessoa.endereco.complemento}"></td>
+					<td th:text="${pessoa.endereco.municipio}"></td>
+					<td th:text="${pessoa.endereco.estado}"></td>
+					<td><a class="btn btn-primary btn-sm"
+						th:href="@{/pessoa/editar(id=${pessoa.id})}">Editar</a> <a
+						class="btn btn-danger btn-sm"
+						th:href="@{/pessoa/excluir(id=${pessoa.id})}">Excluir</a></td>
+				</tr>
+				
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+</html>

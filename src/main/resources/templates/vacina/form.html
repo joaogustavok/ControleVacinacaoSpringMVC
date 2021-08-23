@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout.html}">
+<meta charset="UTF-8">
+<div layout:fragment="content">
+	<div class="alert alert-primary" th:if="${mensagem != null}" th:text="${mensagem}">
+	</div>
+	<div class="card">
+		<div class="card-header">
+			<p class="text-primary">Nova Vacina</p>
+		</div>
+		<div class="card-body">
+			<form method="POST" th:object="${vacina}" th:action="@{/vacina/editar}">
+				<input type="hidden" th:field="*{id}"></input>
+				<div class="form-group mb-3">
+					<label for="nome">Nome da Vacina</label> <input
+						class="form-control" type="text" th:field="*{nome}" required></input>
+						<div class="text-danger" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"> </div>
+				</div>
+				<div class="form-group mb-3">
+					<label for="laboratorio">Laboratório da Vacina</label> <input
+						class="form-control" type="text" th:field="*{laboratorio}" required ></input>
+						<div class="text-danger" th:if="${#fields.hasErrors('laboratorio')}" th:errors="*{laboratorio}"> </div>
+				</div>
+				<div class="form-group mb-3">
+					<label for="isDose">Posologia</label> <select class="form-control"
+						name="isDose" th:field="*{isDose}" required>
+						<option value="" selected disabled hidden>Escolha:</option>
+						<option value="false">Duas Doses</option>
+						<option value="true">Dose unica</option>
+					</select>
+				</div>
+				<div class="form-group mb-3">
+					<label for="intervalo">Intervalo (em dias)</label> <input
+						class="form-control" type="number" th:field="*{intervalo}" required></input>
+						<div class="text-danger" th:if="${#fields.hasErrors('intervalo')}" th:errors="*{intervalo}"> </div>
+				</div>
+				<button type="submit" class="btn btn-primary">Salvar</button>
+			</form>
+		</div>
+	</div>
+</div>
+</html>

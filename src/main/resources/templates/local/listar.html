@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout.html}">
+<meta charset="UTF-8">
+<div layout:fragment="content">
+	<div class="alert alert-primary" th:if="${#lists.isEmpty(lista)}">
+		Nenhum Local Cadastrado.
+	</div>
+	<div class="alert alert-primary" th:if="${mensagem != null}" th:text="${mensagem}">
+	</div>
+	<div th:if="${not #lists.isEmpty(lista)}">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Local:</th>
+					<th>Cep</th>
+					<th>Logradouro</th>
+					<th>Numero</th>
+					<th>Complemento</th>
+					<th>Municipio</th>
+					<th>Estado</th>
+					<th>Opções</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="local:${lista}">
+					<td th:text="${local.id}"></td>
+					<td th:text="${local.nome}" > </td>
+					<td th:text="${local.endereco.cep}"></td>
+					<td th:text="${local.endereco.logradouro}"></td>
+					<td th:text="${local.endereco.numero}"></td>
+					<td th:text="${local.endereco.complemento}"></td>
+					<td th:text="${local.endereco.municipio}"></td>
+					<td th:text="${local.endereco.estado}"></td>
+					<td><a class="btn btn-primary btn-sm" th:href="@{/local/editar(id=${local.id})}">Editar</a>
+					<a class="btn btn-danger btn-sm" th:href="@{/local/excluir(id=${local.id})}">Excluir</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+</html>

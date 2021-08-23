@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout.html}">
+<meta charset="UTF-8">
+<div layout:fragment="content">
+	<div class="alert alert-primary" th:if="${#lists.isEmpty(lista)}">
+		Todos já estão vacinados :D
+	</div>
+	<div class="alert alert-primary" th:if="${mensagem != null}" th:text="${mensagem}">
+	</div>
+	<div class="jumbotron mb-0"> 
+		<h1 class="display-4">Relatório</h1>
+	</div>
+	<div th:if="${not #lists.isEmpty(lista)}">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Data</th>
+					<th>Pessoa</th>
+					<td>Lote da Vacina</td>
+					<td>Local de Vacinação</td>
+					<td>Dose</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="vacinacao:${lista}" th:if="${vacinacao.dose == 'Primeira'}">
+					<td th:text="${vacinacao.id}"></td>
+					<td th:text="${#dates.format(vacinacao.dataVacinacao, 'dd/MM/yyyy')}"></td>
+					<td th:text="${vacinacao.pessoa.nome}"></td>
+					<td th:text="${vacinacao.lote.identificacao}"></td>
+					<td th:text="${vacinacao.local.nome}"></td>
+					<td th:text="${vacinacao.dose}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+</html>

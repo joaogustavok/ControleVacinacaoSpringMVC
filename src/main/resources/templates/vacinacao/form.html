@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout.html}">
+<meta charset="UTF-8">
+<div layout:fragment="content">
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+		
+	</script>
+	<div class="alert alert-primary" th:if="${mensagem != null}"
+		th:text="${mensagem}"></div>
+	<div class="card">
+		<div class="card-header">
+			<p class="text-primary">Nova Vacinação</p>
+		</div>
+		<div class="card-body">
+			<form method="POST" th:object="${vacinacao}"
+				th:action="@{/vacinacao/editar}">
+				<input type="hidden" th:field="*{id}"></input>
+				<div class="form-group mb-3">
+					<label for="nome">Pessoa:</label> <select class="form-select"
+						th:field="*{pessoa}">
+						<option th:each="pessoa: ${listaPessoas}" th:value="${pessoa.id}"
+							th:text="${pessoa.nome}"></option>
+					</select>
+				</div>
+				<div class="form-group mb-3">
+					<label for="dataVacinacao">Data Vacinação:</label> <input
+						class="form-control" type="date" th:field="*{dataVacinacao}"
+						required></input>
+					<div class="text-danger"
+						th:if="${#fields.hasErrors('dataVacinacao')}"
+						th:errors="*{dataVacinacao}"></div>
+				</div>
+				<div class="form-group mb-3">
+					<label for="local">Local:</label> <select class="form-select"
+						th:field="*{local}">
+						<option th:each="local: ${listaLocais}" th:value="${local.id}"
+							th:text="${local.nome}"></option>
+					</select>
+				</div>
+				<div class="form-group mb-3">
+					<label for="lote">Lote de Vacina:</label> <select
+						class="form-select" name="lote" id="lote">
+						<option>--</option>
+						<option th:each="lote: ${listaLotes}" th:value="${lote.id}"
+							th:text="${lote.identificacao}"></option>
+					</select>
+				</div>
+
+				<div class="form-group mb-3">
+
+					<label for="dose">Dose:</label> <select class="form-select"
+						th:field="*{dose}">
+					
+					</select>
+				</div>
+				<button type="submit" class="btn btn-primary">Salvar</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+</html>
+
+
+<script>
+
+	$('#lote').change(
+			function() {
+
+				let dose = $('#dose')
+				dose.empty();
+
+				const url = '/vacinacao/listarVacinaPorLote?idLote='
+						+ $("#lote").val();
+
+				$.getJSON(url, function(data) {
+					console.log(data)
+					
+					if ((data).isDose) {
+						dose.append($('<option><option>').attr('value',
+						'Unica').text('Unica'))
+					} else {
+						dose.append($('<option><option>').attr('value',
+								'Primeira').text('Primeira'))
+						dose.append($('<option><option>').attr('value',
+								'Segunda').text('Segunda'))
+					}
+				});
+
+			});
+</script>
+

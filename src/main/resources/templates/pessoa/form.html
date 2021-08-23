@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout.html}">
+<meta charset="UTF-8">
+<div layout:fragment="content">
+	<div class="alert alert-primary" th:if="${mensagem != null}" th:text="${mensagem}">
+	</div>
+	<div class="card">
+		<div class="card-header">
+			<p class="text-primary">Nova Pessoa</p>
+		</div>
+		<div class="card-body">
+			<form method="POST" th:object="${pessoa}" th:action="@{/pessoa/editar}">
+				<input type="hidden" th:field="*{id}"></input>
+				<div class="form-group mb-3">
+					<label for="nome">Nome:</label> <input
+						class="form-control" type="text" th:field="*{nome}" required></input>
+						<div class="text-danger" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"> </div>
+				</div>
+				<div class="form-group mb-3">
+					<label for="cpf">CPF</label> <input
+						class="form-control" type="text" th:field="*{cpf}" required ></input>
+						<div class="text-danger" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"> </div>
+				</div>
+				<div class="form-group mb-3">
+					<label for="dataNascimento">Data Nascimento:</label> <input
+						class="form-control" type="date" th:field="*{dataNascimento}" required></input>
+						<div class="text-danger" th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}"> </div>
+				</div>
+				
+				<div class="form-group mb-3">
+					<label for="endereco.cep">Cep</label> <input
+						class="form-control" type="text" th:field="*{endereco.cep}" required ></input>
+						<div class="text-danger" th:if="${#fields.hasErrors('endereco.cep')}" th:errors="*{endereco.cep}"> </div>
+				</div>
+				<div class="form-group mb-3">
+					<label for="endereco.logradouro">Logradouro</label> <input
+						class="form-control" type="text" th:field="*{endereco.logradouro}" required ></input>
+						<div class="text-danger" th:if="${#fields.hasErrors('endereco.logradouro')}" th:errors="*{endereco.logradouro}"> </div>
+				</div>
+					<div class="form-group mb-3">
+					<label for="endereco.complemento">Complemento</label> <input
+						class="form-control" type="text" th:field="*{endereco.complemento}" required ></input>
+						<div class="text-danger" th:if="${#fields.hasErrors('endereco.complemento')}" th:errors="*{endereco.complemento}"> </div>
+				</div>
+					<div class="form-group mb-3">
+					<label for="endereco.numero">Número</label> <input
+						class="form-control" type="number" th:field="*{endereco.numero}" required ></input>
+						<div class="text-danger" th:if="${#fields.hasErrors('endereco.numero')}" th:errors="*{endereco.numero}"> </div>
+				</div>
+					<div class="form-group mb-3">
+					<label for="endereco.municipio">Municipio</label> <input
+						class="form-control" type="text" th:field="*{endereco.municipio}" required ></input>
+						<div class="text-danger" th:if="${#fields.hasErrors('endereco.municipio')}" th:errors="*{endereco.municipio}"> </div>
+				</div>
+					<div class="form-group mb-3">
+					<label for="endereco.estado">Estado</label> <input
+						class="form-control" type="text" th:field="*{endereco.estado}" required ></input>
+						<div class="text-danger" th:if="${#fields.hasErrors('endereco.estado')}" th:errors="*{endereco.estado}"> </div>
+				</div>
+				<button type="submit" class="btn btn-primary">Salvar</button>
+			</form>
+		</div>
+	</div>
+</div>
+</html>
